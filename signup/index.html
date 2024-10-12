@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  
+  <!-- Babel Script -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script src = 'signup.js'></script>
+
+  <link rel="stylesheet" href="signup.css">
+  
+  <title>Sign up</title>
+  
+</head>
+<body>
+  <div class = 'signupbox'>
+    <div id = 'signupsitename'>
+      <p style = 'font-size: 40px;'>posting</p>
+    </div>
+    <br>
+    <div id = 'signupinputs'>
+      <div>
+        <p>Sign up</p>
+      </div>
+      <div>
+        <label for = 'id'>id</label>
+        <br>
+        <input id = 'signupid' type = 'email' name = 'id' placeholder = 'email' pattern = 'email'></input>
+      </div>
+      <div id = 'inputs'>
+        <label for = 'password'>password</label>
+        <br>
+        <input type = 'password' name = 'password' minlength = '8' placeholder = 'password' pattern = 'password'></input>
+      </div>
+    </div>
+    <div class = 'signupbuttons'>
+      <br>
+      <button id = 'signup'>Sign up</button>
+    </div>
+  </div>
+</body>
+
+</html>
