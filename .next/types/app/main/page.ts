@@ -1,4 +1,4 @@
-// File: /workspaces/posting-webpage/src/app/main/page.tsx
+// File: /workspaces/posting-webpage-token/src/app/main/page.tsx
 import * as entry from '../../../../src/app/main/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

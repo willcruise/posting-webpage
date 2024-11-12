@@ -1,34 +1,26 @@
 "use server"
 
-
 import { sha256Hash } from "../../utils/hash.ts";
 import { setId } from "../../utils/currentacc.ts";
 import { setPassword } from "../../utils/currentacc.ts";
 import { setIsLoggedIn } from "../../utils/currentacc.ts";
 
-
 export async function loginHandler(Data){
     
-    console.log("jo");
-
-
     if (typeof Data.id !== "string" || typeof Data.password !== "string" || Data.id == "" || Data.password == ""){
-        //get the first letter of input id
+
         return {validate:false, message:"Invalid input"} 
     }
 
     try {
         const firstLetter = Array.from(Data.id)[0];
-        const idendp:string = "http://localhost:4000/" + firstLetter;
+        
 
-
-        const preIdData = await fetch(idendp);
+        const preIdData = await fetch("http://localhost:4000/" + firstLetter);
         const prePwData = await fetch("http://localhost:4000/password");
 
         const pwData = prePwData.json();
         const idData = preIdData.json();
-
-        console.log(idData);
 
         //validation process
         for (const identity in idData){
@@ -47,5 +39,5 @@ export async function loginHandler(Data){
 
         return {validate: false, message:"No account, please sign up"}
 
-    }catch(error){return {validate: false, message:`Error: ${error}`}}
+    }catch(error){return {validate: false, message:`Error: {${error}}`}}
 }

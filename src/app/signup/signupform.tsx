@@ -5,6 +5,8 @@ import Id from "../../components/id.tsx"
 import SubmitButton from "./submitbutton.tsx"
 import React, { FormEvent } from 'react';
 import { useRouter } from "next/navigation"
+import { handleSignUp } from "./signuphandler"
+
 
 type data = {success:boolean, message: string }
 
@@ -12,24 +14,16 @@ export default function SignUpForm(){
 
     const router = useRouter();
 
+    type resObj = {validate: boolean, message: string};
+  
+    var state:resObj = {validate:false, message:""};
+
     async function signUpAccount(event:FormEvent<HTMLFormElement>){
         event.preventDefault;
         const formData = new FormData(event.currentTarget);
         const Data = Object.fromEntries(formData.entries());
-        const idstr = Data.id;
-        const pwstr = Data.password;
-        const addacc = {id:idstr, password:pwstr};
-        
-        if (typeof idstr !== "string" || typeof pwstr !== "string"){
-            alert("Invalid input");
-            return    
-        }
-
-        const response = await fetch("api/signup/", {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(addacc),
-        })
+             
+        const response = await handleSignUp(Data);
 
         if (!response.ok) {
             const errorText = await response.text(); // Get response text for debugging
@@ -52,11 +46,17 @@ export default function SignUpForm(){
                 <br/>
                 <Id/>
                 <br/>
+                <br/>
                 <Password/>
-                <div className = 'loginbuttons'>
-                    <br/>
-                    <SubmitButton/>
-                </div>
+                <br/>
+                <label>
+                    retype password
+                <br/>
+                <input type = 'password' name = 'password'/>
+                </label>
+                <br/>
+                <br/>
+                <SubmitButton/>
             </div> 
         </form>
     )

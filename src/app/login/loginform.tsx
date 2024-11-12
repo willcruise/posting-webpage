@@ -3,7 +3,6 @@
 import Password from "../../components/password.tsx";
 import Id from "../../components/id.tsx";
 import React from 'react';
-import { useActionState } from "react";
 import { useEffect } from "react";
 import "../../styles/loginbutton.css"
 import { loginHandler } from "./loginhandler.ts"
@@ -14,7 +13,7 @@ export default function LoginForm(){
   
   type resObj = {validate: boolean, message: string};
   
-  let state:resObj = {validate:false, message:""};
+  var state:resObj = {validate:false, message:""};
 
   async function loginClicked(e){
 
@@ -25,24 +24,14 @@ export default function LoginForm(){
     const Data = {id:formData.get("id"), password:formData.get("password")};
 
     
-    const res = await loginHandler(Data);
+    state = await loginHandler(Data);  
 
-   
-
-    if(res.validate){
+    const loginText = document.querySelector("#validateText")!;
+    if(state.validate){
       router.push("/main");
-    }else{state = res}
+    }else{loginText.textContent = state.message;}
 
   }
-
-
-  useEffect(() => {
-    const loginText = document.getElementById("validateText")!;
-    if (!state.validate){
-      loginText.textContent = state.message;
-    }
-  })
-
 
   return(
     <form method = "POST" id = "login-form" onSubmit = { loginClicked }>
