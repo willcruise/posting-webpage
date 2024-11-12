@@ -8,10 +8,7 @@ import { useRouter } from "next/navigation"
 import { handleSignUp } from "./signuphandler"
 
 
-type data = {success:boolean, message: string }
-
 export default function SignUpForm(){
-
     const router = useRouter();
 
     type resObj = {validate: boolean, message: string};
@@ -25,18 +22,6 @@ export default function SignUpForm(){
              
         const response = await handleSignUp(Data);
 
-        if (!response.ok) {
-            const errorText = await response.text(); // Get response text for debugging
-            console.log('Error response:', errorText);
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      
-        const data:data = await response.json()
-
-        if (data.success) {
-            alert("Sign up successful");
-            router.push("/login")
-        }else{alert("Sign up failed")}
     }
     
     return(
@@ -52,7 +37,7 @@ export default function SignUpForm(){
                 <label>
                     retype password
                 <br/>
-                <input type = 'password' name = 'password'/>
+                <input type = 'password' name = 'pwconfirm'/>
                 </label>
                 <br/>
                 <br/>
