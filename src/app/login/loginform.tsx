@@ -3,7 +3,6 @@
 import Password from "../../components/password.tsx";
 import Id from "../../components/id.tsx";
 import React from 'react';
-import { useEffect } from "react";
 import "../../styles/loginbutton.css"
 import { loginHandler } from "./loginhandler.ts"
 import { useRouter } from "next/navigation";

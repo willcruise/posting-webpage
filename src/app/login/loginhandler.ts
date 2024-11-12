@@ -16,11 +16,12 @@ export async function loginHandler(Data){
         const firstLetter = Array.from(Data.id)[0];
         
 
-        const preIdData = await fetch("http://localhost:4000/" + firstLetter);
-        const prePwData = await fetch("http://localhost:4000/password");
+        const preIdData = await fetch(`https://super-duper-telegram-wq56gw4rrp4cgqp-3000.app.github.dev/accounts/accounts.json/${firstLetter}`);
+        const prePwData = await fetch("https://super-duper-telegram-wq56gw4rrp4cgqp-3000.app.github.dev/account/accounts.json/password");
 
-        const pwData = prePwData.json();
-        const idData = preIdData.json();
+
+        const pwData = await prePwData.json();
+        const idData = await preIdData.json();
 
         //validation process
         for (const identity in idData){

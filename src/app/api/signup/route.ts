@@ -1,22 +1,19 @@
-import fs from 'fs';
-import path from 'path';
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sha256Hash } from "../../../utils/hash.ts";
 
 
 export default function handler(req:NextApiRequest, res:NextApiResponse) {
-  const filePath = path.join(process.cwd(), "public", 'accounts.json');
-
+  
+  //check if request method is post
   if (req.method !== 'POST') {
     res.setHeader("Allow", ["POST"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
+
   try {
       const newData = req.body;
-      
-     
-      const data = fs.readFileSync(filePath, 'utf8');
-      const jsonData = JSON.parse(data);
+          
       const addId = newData.id;
       const addPw = newData.password;  
 
