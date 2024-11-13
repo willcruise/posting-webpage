@@ -1,42 +1,29 @@
 "use server"
 
-
-
 import fs from 'fs'
 import { sha256Hash } from "../../utils/hash.ts";
 
+
 export async function handleSignUp(Data){
-
-    if (typeof Data.id !== "string" || typeof Data.password !== "string" || typeof Data.pwconfirm !== "string" || Data.pwconfirm == "" || Data.id == "" || Data.password == ""){
-        return {validate:false, message:"Invalid input"} 
-    }
-
+    
     try {
-        const firstLetter = Array.from(Data.id)[0];
-     
         
-        const preIdData = await fetch(`https://super-duper-telegram-wq56gw4rrp4cgqp-3000.app.github.dev/accounts/accounts.json/${firstLetter}`);
-        const prePwData = await fetch("https://super-duper-telegram-wq56gw4rrp4cgqp-3000.app.github.dev/account/accounts.json/password");
+        const firstLetter = Data.id[0]
 
+        const response = fs.readFileSync("/workspaces/posting-webpage-token/public/accounts/accounts.json", 'utf-8');
+        const preData = JSON.parse(response);
+  
 
-        const pwData = await prePwData.json();
-        const idData = await preIdData.json();
-           
-        if(Data.pwconfirm != Data.password){
-            return {validate:false, message:"Password inputs doesn't match"}
-        }
+       
+        const idData = preData[firstLetter];
+        const pwData = preData.password;  
+            
 
-        for(const id in idData){
-            if (id == Data.id){
-                return {validate:false, message:"Account already exists"}
-            }            
-        }
-
-        let success = false;    
-        
-        //insert id process
-        idData.push(Data.id);
-
+       
+        if (idData.includes(Data.id)){
+              return {validate:false, message:"Account already exists"}
+        }            
+                  
         //insert password process
         const hashedId = sha256Hash(Data.id);
         if (hashedId in pwData){
@@ -44,16 +31,18 @@ export async function handleSignUp(Data){
         }else{
             pwData[hashedId] = [Data.password];
         }
-
-        fs.appendFile('')
-
-
-
-
-
-
-
+       
+        //modifying read data to write 
+        preData[firstLetter].push(Data.id);
+        preData.password.hashedId = Data.password;
     
-    }catch(error){}
+        await fs.writeFileSync(`./public/accounts/accounts.json`, JSON.stringify(preData))
+        
+        return {validate:true, message:"Sign up successful"};
+  
+    }catch(error){
+        
+        return {validate:false, message: error}
+    }
 
 }

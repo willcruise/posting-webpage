@@ -8,7 +8,7 @@ import { setIsLoggedIn } from "../../utils/currentacc.ts";
 export async function loginHandler(Data){
     
     if (typeof Data.id !== "string" || typeof Data.password !== "string" || Data.id == "" || Data.password == ""){
-
+        
         return {validate:false, message:"Invalid input"} 
     }
 

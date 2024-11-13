@@ -11,16 +11,27 @@ import { handleSignUp } from "./signuphandler"
 export default function SignUpForm(){
     const router = useRouter();
 
-    type resObj = {validate: boolean, message: string};
-  
-    var state:resObj = {validate:false, message:""};
-
     async function signUpAccount(event:FormEvent<HTMLFormElement>){
-        event.preventDefault;
+        event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const Data = Object.fromEntries(formData.entries());
-             
+        
+        if (typeof Data.id !== "string" || typeof Data.password !== "string" || typeof Data.pwconfirm !== "string" || Data.pwconfirm == "" || Data.id == "" || Data.password == ""){
+            alert("Invalid input");
+            return 
+        }
+
+        if(Data.pwconfirm != Data.password){
+            alert("Password inputs doesn't match");
+            return
+        }
+        
         const response = await handleSignUp(Data);
+        console.log(response)
+        if(response.validate){
+            alert(response.message);
+            router.push("/login")
+        }else{alert(response.message)}
 
     }
     
