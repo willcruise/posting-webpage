@@ -34,9 +34,9 @@ export async function handleSignUp(Data){
        
         //modifying read data to write 
         preData[firstLetter].push(Data.id);
-        preData.password.hashedId = Data.password;
+        preData.password[hashedId] = Data.password;
     
-        await fs.writeFileSync(`./public/accounts/accounts.json`, JSON.stringify(preData))
+        await fs.writeFileSync(`./public/accounts/accounts.json`, JSON.stringify(preData, null, 2))
         
         return {validate:true, message:"Sign up successful"};
   

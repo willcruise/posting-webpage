@@ -1,9 +1,7 @@
 "use server"
 
+import fs from 'fs'
 import { sha256Hash } from "../../utils/hash.ts";
-import { setId } from "../../utils/currentacc.ts";
-import { setPassword } from "../../utils/currentacc.ts";
-import { setIsLoggedIn } from "../../utils/currentacc.ts";
 
 export async function loginHandler(Data){
     
@@ -13,26 +11,22 @@ export async function loginHandler(Data){
     }
 
     try {
-        const firstLetter = Array.from(Data.id)[0];
+        const firstLetter = Data.id[0];
         
+        const response = fs.readFileSync("/workspaces/posting-webpage-token/public/accounts/accounts.json", 'utf-8');
+        const preData = JSON.parse(response);
+             
 
-        const preIdData = await fetch(`https://super-duper-telegram-wq56gw4rrp4cgqp-3000.app.github.dev/accounts/accounts.json/${firstLetter}`);
-        const prePwData = await fetch("https://super-duper-telegram-wq56gw4rrp4cgqp-3000.app.github.dev/account/accounts.json/password");
-
-
-        const pwData = await prePwData.json();
-        const idData = await preIdData.json();
+        const idData = preData[firstLetter];
+        const pwData = preData.password;  
 
         //validation process
-        for (const identity in idData){
-            if(identity == Data.id){
+        for (var i = 0; i<idData.length; i++){
+            if(idData[i] == Data.id){
                 //hash of input id if id exists in database
                 const hashedId:string = sha256Hash(Data.id);
                 //check if password matches
                 if (Data.password == pwData[hashedId]){
-                    await setIsLoggedIn(true);
-                    await setId(Data.id);
-                    await setPassword(Data.password);
                     return {validate: true, message:"Sign in successful"}
                 }else{return {validate: false, message:"Incorrect password"}}
             }

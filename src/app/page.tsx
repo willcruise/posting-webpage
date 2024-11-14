@@ -1,3 +1,5 @@
+"use client"
+
 import '../styles/App.css'
 import  { getIsLoggedIn }  from '../utils/currentacc.ts'
 import LoginPage from "./login/page.tsx"

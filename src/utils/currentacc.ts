@@ -1,4 +1,4 @@
-"use server"
+"use client"
 
 var isLoggedIn:boolean = false;
 

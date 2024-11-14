@@ -27,7 +27,7 @@ export default function SignUpForm(){
         }
         
         const response = await handleSignUp(Data);
-        console.log(response)
+  
         if(response.validate){
             alert(response.message);
             router.push("/login")
