@@ -1,5 +1,6 @@
 "use server"
 
+import { cookies } from "next/headers"
 import fs from 'fs'
 import { sha256Hash } from "../../utils/hash.ts";
 
@@ -27,6 +28,8 @@ export async function loginHandler(Data){
                 const hashedId:string = sha256Hash(Data.id);
                 //check if password matches
                 if (Data.password == pwData[hashedId]){
+                    const cookieStore = await cookies();
+                    cookieStore.set('id', Data.id);
                     return {validate: true, message:"Sign in successful"}
                 }else{return {validate: false, message:"Incorrect password"}}
             }

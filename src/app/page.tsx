@@ -1,14 +1,15 @@
-"use client"
 
+import { cookies } from "next/headers"
 import '../styles/App.css'
-import  { getIsLoggedIn }  from '../utils/currentacc.ts'
+
 import LoginPage from "./login/page.tsx"
 import MainPage from "./main/page.tsx"
 
-const isLoggedIn = await getIsLoggedIn();
+const cookieStore = await cookies()
+const id = cookieStore.has('id');
 
 const App: React.FC = () => {
-  return isLoggedIn? <MainPage/>:<LoginPage/>;
+  return id? <MainPage/>:<LoginPage/>;
 }
 
 export default App;
