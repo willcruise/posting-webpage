@@ -1,13 +1,12 @@
 "use client"
-
+import "../../styles/globals.css"
 import Password from "../../components/password.tsx";
 import Id from "../../components/id.tsx";
 import React from 'react';
 import "../../styles/loginbutton.css"
 import { loginHandler } from "./loginhandler.ts"
 import { useRouter } from "next/navigation";
-import { setId } from "../../utils/currentacc.ts";
-import { setIsLoggedIn } from "../../utils/currentacc.ts";
+
 
 
 export default function LoginForm(){
@@ -46,7 +45,7 @@ export default function LoginForm(){
         <Password/>
         <div className = 'loginbuttons'>
           <br/>
-          <button type = 'submit'>Login</button>
+          <button className = "border border-slate-100 bg-slate-100" type = 'submit'>Login</button>
           <p id = "validateText"/>
         </div>
       </div> 

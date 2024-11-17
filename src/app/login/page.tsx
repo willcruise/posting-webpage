@@ -3,7 +3,7 @@ import LoginForm from "./loginform.tsx"
 import SignUpButton from "./signupbutton.tsx"
 import React from 'react';
 import { Suspense } from "react"
-
+import "../../styles/globals.css"
 export default function LoginPage(){
 
   return( 

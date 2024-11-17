@@ -1,5 +1,5 @@
 "use client"
-
+import "../styles/globals.css"
 import React from 'react';
 
 export default function Password(){
@@ -7,7 +7,7 @@ export default function Password(){
         <label>
             Password
             <br/>
-            <input type = 'password' name = 'password'/>
+            <input className = "border-slate-100 bg-slate-100" type = 'password' name = 'password'/>
         </label>
     )
 }
